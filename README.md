@@ -1,13 +1,14 @@
-# youtube-dl-server
+# yt-dlp-server
 
-#### (A modified version of [manbearwiz's youtube-dl-server](https://github.com/manbearwiz/youtube-dl-server). This project is still in the beta stages, so deploy it at your own risk.)
+#### (A modified version of katznboyz original that was a modified version of [manbearwiz's youtube-dl-server](https://github.com/manbearwiz/youtube-dl-server). This project is still in the beta stages, so deploy it at your own risk.)
 
-*As of 2020/08/27, I will only be working on this project occasionally. I still want to update it, but the new school year brings new (educationally oriented) different projects that will take up more of my time. If you would like to help out, you can try to add code to this! Thanks! Updates will be coming out occasionally, and hopefully this will be done soon.*
+*This is a work in progress as I change things from the original*
 
 ![](https://i.imgur.com/oWHtkp1.png?raw=true)
 
 ## What is new in this version?
 
+-YT-DLP instead of youtube-dl as the backend downloader
 - You can now specify where to download the videos on the server you are downloading to, which helps simplifiy adding videos to media servers such as Plex or Jellyfin.
 - Built in metadata tagging. The downloader will now apply the appropriate metadata to media you download (artist/author/title) so that you dont need to deal with tagging everything once its downloaded. This also helps simplify adding videos to media servers.
 - All of the files are hosted locally. Previously, youtube-dl-server reached out to CDNs on the internet for web assets, however this new version has everything included locally. This means that you don't need to be reliant on external CDNs and you are in full control of your files.
@@ -23,12 +24,11 @@
 
 #### In the works right now:
 
-- Transferring all the form inputs to ajax requests.
+- A few visual changes
+- A docker image for Raspbian, pre-built images on docker hub
 
 #### In the future:
 
-- Docker images (planning on supporting Raspis).
-- The ability to administrate the program via Systemctl.
 - Support for downloading videos with captions (currently having issues with this, help would be appreciated).
 - Support for (pleasant) mobile device viewing (currently the only mobile devices that this app works on are tablets).
 
@@ -51,12 +51,9 @@ Pre setup-warning: The user this program is running under should have r/w access
 1. Run `setup.py` with Python>=3.6 (below 3.6 isn't tested yet). Make sure to use a strong password for your admin account, to ensure that nobody can log on without your permission.
 2. Once you have ran the setup program, without an error, run the Flask application by running `gunicorn3 --workers 4 --threads 4 --bind 0.0.0.0:8080 wsgi:app`. You can change the host to `127.0.0.1` if you only want the application to work on your computer, but running it as `0.0.0.0` allows others to access the app. You can also change the port from `8080` to something else; `8080` is just the default (warning: port `80` may already be taken by your Apache installation).
 
-#### Docker Install Instructions:
+#### Docker Install Instructions: 
 
-~~Use the provided docker-compose.yml file (with your modifications or run directly from the command line).~~  
-Docker-compose absolutely sucks and is causing heaps of issues. You'll have to manually build the docker image and run that.  
-
-1. `docker build -t katznboyz1/youtube-dl-server:latest .`
+1. `docker build -t victim/youtube-dl-server:latest .`
 2. ```
     docker run -d -p 8080:8080 \
     -v /path/to/downloaded/vids:/app/downloads \
@@ -65,7 +62,7 @@ Docker-compose absolutely sucks and is causing heaps of issues. You'll have to m
     -e ADMINUSER=admin \
     -e PASSWORD=youtube \
     -e TZ=Australia/Melbourne \
-    katznboyz1/youtube-dl-server:latest
+    victim/youtube-dl-server:latest
     ```
 
 
@@ -85,7 +82,7 @@ The docker image exposes port 8080 for the webserver.
 
 ## Having an issue?
 
-Leave an issue on the [official repo](https://github.com/katznboyz1/youtube-dl-server)!
+Leave an issue on this page as the original is being re-written in C++ and I don't do that.
 
 ## Known issues:
 
