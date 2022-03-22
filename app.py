@@ -1055,7 +1055,7 @@ def downloadVideo(videoURL, videoFormat, parentDownloadDir = DEFAULT_VIDEO_DOWNL
             'title':youtubeVideoData['title'],
             'uploader':youtubeVideoData['uploader'],
             'id':youtubeVideoData['id'],
-            'playlist':youtubeVideoData['album'],
+            'playlist':youtubeVideoData['playlist'],
             'playlist_index':youtubeVideoData['playlist_index'],
             'upload_year':str(youtubeVideoData['upload_date'])[0:4],
             'upload_month':str(youtubeVideoData['upload_date'])[4:6],
@@ -1114,7 +1114,7 @@ def downloadVideo(videoURL, videoFormat, parentDownloadDir = DEFAULT_VIDEO_DOWNL
     if (videoDataMetadataGetStatus):
 
         #encode the media file with the data
-        os.system('ffmpeg -i "{}/{}" -strict -2 -metadata title="{}" -metadata author="{}" -metadata artist="{}" -c copy -c:a aac "{}/{}" -nostdin -y'.format(
+        os.system('ffmpeg -i "{}/{}" -strict -2 -metadata title="{}" -metadata author="{}" -metadata artist="{}" -c copy "{}/{}" -nostdin -y'.format(
             parentDownloadDir, #download directory
             tmpFileNameNumber, #filename
             youtubeVideoData['title'] if titleOverride.strip() == '' else titleOverride.strip(), #metadata title
