@@ -8,7 +8,7 @@
 
 ## What is new in this version?
 
--YT-DLP instead of youtube-dl as the backend downloader
+- YT-DLP instead of youtube-dl as the backend downloader
 - You can now specify where to download the videos on the server you are downloading to, which helps simplifiy adding videos to media servers such as Plex or Jellyfin.
 - Built in metadata tagging. The downloader will now apply the appropriate metadata to media you download (artist/author/title) so that you dont need to deal with tagging everything once its downloaded. This also helps simplify adding videos to media servers.
 - All of the files are hosted locally. Previously, youtube-dl-server reached out to CDNs on the internet for web assets, however this new version has everything included locally. This means that you don't need to be reliant on external CDNs and you are in full control of your files.
@@ -65,6 +65,8 @@ Pre setup-warning: The user this program is running under should have r/w access
     victim/youtube-dl-server:latest
     ```
 
+*For raspbian you can build specifying the armhf Dockerfile*:
+`docker build -f Dockerfile.armhf -t victim/youtube-dl-server:latest .`
 
 The environment variables are:  
 * APPNAME - the name you want the application to have (default: YDS)
@@ -80,6 +82,12 @@ And the volumes are:
 
 The docker image exposes port 8080 for the webserver.
 
+#### Docker-Compose install: ####
+
+1. Change necessaries in the docker-compose file such as storage location, ports and passwords
+2. build image to use locally: `docker build -t victim/youtube-dl-server:latest .`
+3. docker-compose up -d 
+
 ## Having an issue?
 
 Leave an issue on this page as the original is being re-written in C++ and I don't do that.
@@ -87,6 +95,7 @@ Leave an issue on this page as the original is being re-written in C++ and I don
 ## Known issues:
 
 - Downloading certain videos with the ultra high format will lead to a missing codec error if you play it on windows.
+--this isn't really an issue with yt-dlp it's an issue with windows itself - ie you need to download a compatible codec or use a video player like VLC that comes with a bunch of codecs already installed.
 
 ## Want to contribute?
 

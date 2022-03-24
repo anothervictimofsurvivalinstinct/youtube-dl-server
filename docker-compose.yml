@@ -2,23 +2,25 @@ version: "3"
 
 services:
     ydl:
-        # Builds the local Dockerfile image
-        # Should probably push this somewhere
-        build: ./
+        image: victim/youtube-dl-server:latest
+        container_name: ytdlpweb
         ports:
-            - "8080:8080" #host : container
-        # restart: unless-stopped
+            - "8080:8080" #host : container. change exposed port to what you want
+        
         volumes:
-            # Where downloaded videos should go
+            # Where downloaded videos should go 
+            #change for your uses
             - /opt/youtubedownloads:/app/downloads
-            # Where the database is
+            # Where the database is 
+            #change for your uses
             - /opt/database:/app/db
         environment:
             - APPNAME=YDS
             - ADMINUSER=admin
-            - PASSWORD=youtube 
-            - TZ=Australia/Melbourne
-        #Docker-compose is a piece of kaka and will override the entrypoint in the Dockerfile
+            - PASSWORD=youtube  #Change for your use, please do not use defaults
+            - TZ=Australia/Melbourne #change for your own local
+        restart: unless-stopped
+        #Docker-compose will override the entrypoint in the Dockerfile
         # Compose devs don't care: https://github.com/docker/compose/issues/3140
         # So I need to double up and specify it here
         entrypoint: "./startup.sh"
