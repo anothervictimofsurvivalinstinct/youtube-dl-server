@@ -20,7 +20,3 @@ services:
             - PASSWORD=youtube  #Change for your use, please do not use defaults
             - TZ=Australia/Melbourne #change for your own local
         restart: unless-stopped
-        #Docker-compose will override the entrypoint in the Dockerfile
-        # Compose devs don't care: https://github.com/docker/compose/issues/3140
-        # So I need to double up and specify it here
-        entrypoint: "./startup.sh"
