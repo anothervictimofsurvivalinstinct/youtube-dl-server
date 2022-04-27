@@ -56,6 +56,7 @@ Pre setup-warning: The user this program is running under should have r/w access
 1. `docker build -t victim/youtube-dl-server:latest .`
 2. ```
     docker run -d -p 8080:8080 \
+    --name=ytdlpserv \
     -v /path/to/downloaded/vids:/app/downloads \
     -v /path/to/database:/app/db \
     -e APPNAME=YDS \
@@ -87,6 +88,14 @@ The docker image exposes port 8080 for the webserver.
 1. Change necessaries in the docker-compose file such as storage location, ports and passwords
 2. build image to use locally: `docker build -t victim/youtube-dl-server:latest .`
 3. docker-compose up -d 
+
+### Updating within the Docker container ###
+
+things break with youtube downloads so yt-dlp occassionally needs to be updated which you can do like so:
+
+1. Exec into the running container: `docker exec -it *container_name_you_used* /bin/bash`
+2. then update the python... stuff: `python3 -m pip install --upgrade -r requirements.txt`
+3. You may or may not have to restart the container but it's always good to do so anyway so you don't run into issues: `docker restart *container_name_you_used*`
 
 ## Having an issue?
 
