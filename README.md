@@ -8,6 +8,7 @@
 
 ## What is new in this version?
 
+- Raspian compatible armhf file
 - YT-DLP instead of youtube-dl as the backend downloader
 - You can now specify where to download the videos on the server you are downloading to, which helps simplifiy adding videos to media servers such as Plex or Jellyfin.
 - Built in metadata tagging. The downloader will now apply the appropriate metadata to media you download (artist/author/title) so that you dont need to deal with tagging everything once its downloaded. This also helps simplify adding videos to media servers.
@@ -25,7 +26,7 @@
 #### In the works right now:
 
 - A few visual changes
-- A docker image for Raspbian, pre-built images on docker hub
+- Pre-built images on docker hub
 
 #### In the future:
 
@@ -53,7 +54,7 @@ Pre setup-warning: The user this program is running under should have r/w access
 
 #### Docker Install Instructions: 
 
-1. `docker build -t victim/youtube-dl-server:latest .`
+1. `docker build -t victim/yt-dlp-server:latest .`
 2. ```
     docker run -d -p 8080:8080 \
     --name=ytdlpserv \
@@ -63,11 +64,11 @@ Pre setup-warning: The user this program is running under should have r/w access
     -e ADMINUSER=admin \
     -e PASSWORD=youtube \
     -e TZ=Australia/Melbourne \
-    victim/youtube-dl-server:latest
+    victim/yt-dlp-server:latest
     ```
 
 *For raspbian you can build specifying the armhf Dockerfile*:
-`docker build -f Dockerfile.armhf -t victim/youtube-dl-server:latest .`
+`docker build -f Dockerfile.armhf -t victim/yt-dlp-server:latest .`
 
 The environment variables are:  
 * APPNAME - the name you want the application to have (default: YDS)
@@ -86,7 +87,7 @@ The docker image exposes port 8080 for the webserver.
 #### Docker-Compose install: ####
 
 1. Change necessaries in the docker-compose file such as storage location, ports and passwords
-2. build image to use locally: `docker build -t victim/youtube-dl-server:latest .`
+2. build image to use locally: `docker build -t victim/yt-dlp-server:latest .`
 3. docker-compose up -d 
 
 ### Updating within the Docker container ###

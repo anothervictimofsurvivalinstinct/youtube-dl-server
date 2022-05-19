@@ -2,7 +2,7 @@ version: "3"
 
 services:
     ydl:
-        image: victim/youtube-dl-server:latest
+        image: victim/yt-dlp-server:latest
         container_name: ytdlpweb
         ports:
             - "8080:8080" #host : container. change exposed port to what you want
