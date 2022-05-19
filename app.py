@@ -1210,13 +1210,13 @@ def YTDL_POLLER():
             try:
 
                 #update the package using pip
-                pip.main(['install', '-U', 'youtube-dl'])
+                pip.main(['install', '-U', 'yt-dlp'])
             
             #it failed, just ignore it and continue without updating
             except:
 
                 #alert the user
-                print('Failed to update youtube-dl using pip.')
+                print('Failed to update yt-dlp using pip.')
 
             #download all the videos on the queue
             for videoID in pendingDownloads:
