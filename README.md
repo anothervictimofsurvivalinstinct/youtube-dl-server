@@ -66,10 +66,6 @@ Pre setup-warning: The user this program is running under should have r/w access
     -e TZ=Australia/Melbourne \
     victim/yt-dlp-server:latest
     ```
-
-*For raspbian you can build specifying the armhf Dockerfile*:
-`docker build -f Dockerfile.armhf -t victim/yt-dlp-server:latest .`
-
 The environment variables are:  
 * APPNAME - the name you want the application to have (default: YDS)
 * ADMINUSER - the name of the admin user (default: admin)
