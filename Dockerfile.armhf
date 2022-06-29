@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM alpine:3.15
 
 # Folder we're keeping the app in
 WORKDIR /app
@@ -12,12 +12,16 @@ ENV TZ=Australia/Melbourne
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Split up these lines so Docker can cache them. Add s6 to use in the start script.
-# add these extras from the regular dockerfile as the raspbian needs them for the cryptography to complete build
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \ 
-    ffmpeg python3 python3-pip s6 build-essential libssl-dev libffi-dev python-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
+RUN apk add \
+        ffmpeg \
+        python3 \
+        py3-pip \
+        s6 \
+        build-base \
+        libressl-dev \
+        libffi-dev \
+        python3-dev
+        
 COPY ./requirements.txt ./ 
 RUN python3 -m pip install -r requirements.txt
 
@@ -26,10 +30,10 @@ RUN python3 -m pip install -r requirements.txt
 ENV UNAME abc
 ENV UID 1000
 ENV GID 1000
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-
-RUN chown -R abc:abc /app
+#RUN addgroup -g $GID -o $UNAME
+#RUN adduser -m -u $UID -g $GID -o -s /bin/bash $UNAME
+RUN addgroup -S abc && adduser -S abc -G abc
+#RUN chown -R abc:abc /app
 
 # Environment variables
 
@@ -37,7 +41,7 @@ ENV APPNAME YDS
 ENV ADMINUSER admin
 ENV PASSWORD youtube
 # Copy the rest of the app
-COPY . .
+COPY --chown=abc:abc . .
 
 # RUN python3 ./setup.py --appname=${APPNAME} --username=${ADMINUSER} --password=${PASSWORD}
 
