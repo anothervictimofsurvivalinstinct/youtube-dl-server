@@ -11,7 +11,6 @@ RUN apk add \
         libffi-dev \
         python3-dev
         
-#COPY ./requirements.txt ./ 
 #adding an env to keep it from complaining about where it's installed
 ENV PATH="/root/.local/bin:$PATH"
 RUN python3 -m pip install --user wheel flask yt-dlp flask-session gunicorn
@@ -38,6 +37,8 @@ RUN apk add \
     py3-pip \
     s6
 
+#adding to ease in updating withing the container
+COPY ./requirements.txt ./ 
 #requests doesn't get moved over for some reason so adding it here
 RUN python3 -m pip install --user requests
 #python env path taken from the build image and used here as builders aren't needed    
